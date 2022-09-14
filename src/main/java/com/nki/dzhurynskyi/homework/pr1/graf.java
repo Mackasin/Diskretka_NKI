@@ -33,14 +33,14 @@ public class graf {
             inMatrix[s - 1][k - 1] = 1;
             inMatrix[k - 1][s - 1] = 1;
         }
-        System.out.println("Adjacency matrix:");
+        System.out.println("Incidence matrix:");
         for (int i = 0; i < vertex; i++) {
             for (int j = 0; j < edges; j++) {
                 System.out.print(adMatrix[i][j] + " ");
             }
             System.out.print("\n");
         }
-        System.out.println("Incidence matrix:");
+        System.out.println("Adjacency matrix:");
         for (int i = 0; i < vertex; i++) {
             for (int j = 0; j < vertex; j++) {
                 System.out.print(inMatrix[i][j] + " ");
