@@ -18,7 +18,7 @@ class Tree {
 
         int[][] inMatrix = new int[t.vertex][edges];
         int[][] adMatrix = new int[t.vertex][t.vertex];
-
+        int [][]tree=new int[t.vertex][t.vertex];
 
         System.out.println("Please write data:");
         fillMatrix(edges, adMatrix, inMatrix);
@@ -27,16 +27,20 @@ class Tree {
         System.out.println("Adjacency matrix:");
         printMatrix(adMatrix);
 
+        System.out.println("MST:");
 
-        t.primMST(adMatrix);
+        t.primMST(adMatrix,tree);
+        printMatrix(tree);
     }
 
     private static void fillMatrix(int edges, int[][] adMatrix, int[][] inMatrix) {
         int s, k, l = 1;
+        int weightGraph = 0;
         for (int i = 0; i < edges; i++) {
             System.out.println("E" + (l++) + ":");
             System.out.println("Write weight:");
             int n = sc.nextInt();
+            weightGraph+=n;
             System.out.println("Write vertexes:");
             s = sc.nextInt();
             k = sc.nextInt();
@@ -45,6 +49,7 @@ class Tree {
             adMatrix[s - 1][k - 1] = n;
             adMatrix[k - 1][s - 1] = n;
         }
+        System.out.println("\nWeight graph: "+weightGraph);
     }
 
     private static void printMatrix(int[][] array) {
@@ -55,7 +60,7 @@ class Tree {
             System.out.print("\n");
         }
     }
-    
+
 
     int minKey(int[] key, Boolean[] mstSet) {
 
@@ -70,17 +75,22 @@ class Tree {
         return min_index;
     }
 
-    void printMST(int[] parent, int[][] graph) {
+    void printMST(int[] parent, int[][] graph,int [][]tree) {
+        int minWeight = 0;
         System.out.println("Edge \tWeight");
-        for (int i = 1; i < vertex; i++)
+        for (int i = 1; i < vertex; i++) {
             System.out.println(parent[i] + 1 + " - " + (i + 1) + "\t"
                     + graph[i][parent[i]]);
+            minWeight += graph[i][parent[i]];
+            tree[ parent[i]][i]=graph[i][parent[i]];
+            tree[i][parent[i]]=graph[i][parent[i]];
+        }
+        System.out.println("Min weight: "+minWeight);
     }
 
-    void primMST(int[][] graph) {
+    void primMST(int[][] graph,int[][]tree) {
         int[] parent = new int[vertex];
         int[] key = new int[vertex];
-
 
         Boolean[] mstSet = new Boolean[vertex];
 
@@ -88,8 +98,6 @@ class Tree {
             key[i] = Integer.MAX_VALUE;
             mstSet[i] = false;
         }
-
-
         key[0] = 0;
 
         parent[0] = -1;
@@ -98,7 +106,6 @@ class Tree {
         for (int count = 0; count < vertex - 1; count++) {
 
             int u = minKey(key, mstSet);
-
 
             mstSet[u] = true;
 
@@ -110,9 +117,7 @@ class Tree {
                     key[v] = graph[u][v];
                 }
         }
-
-
-        printMST(parent, graph);
+        printMST(parent, graph,tree);
     }
 
 }
