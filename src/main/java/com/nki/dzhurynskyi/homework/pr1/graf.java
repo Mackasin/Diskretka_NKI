@@ -9,44 +9,43 @@ public class graf {
         int vertex = sc.nextInt();
         System.out.println("Edges:");
         int edges = sc.nextInt();
-        int s, k, l = 1;
 
-        int[][] adMatrix = new int[vertex][edges];
-        int[][] inMatrix = new int[vertex][vertex];
-        for (int i = 0; i < vertex; i++) {
-            for (int j = 0; j < edges; j++) {
-                adMatrix[i][j] = 0;
-            }
-        }
-        for (int i = 0; i < vertex; i++) {
-            for (int j = 0; j < vertex; j++) {
-                inMatrix[i][j] = 0;
-            }
-        }
+
+        int[][] inMatrix = new int[vertex][edges];
+        int[][] adMatrix = new int[vertex][vertex];
+
+
         System.out.println("Please write data:");
+        fillMatrix(sc, edges, adMatrix, inMatrix);
+        System.out.println("Incidence matrix:");
+        printMatrix(adMatrix);
+        System.out.println("Adjacency matrix:");
+        printMatrix(inMatrix);
+    }
+
+
+    private static void fillMatrix(Scanner sc, int edges, int[][] adMatrix, int[][] inMatrix) {
+        int s, k, l = 1;
         for (int i = 0; i < edges; i++) {
             System.out.println("E" + (l++) + ":");
+            System.out.println("Write weight:");
+            int n = sc.nextInt();
+            System.out.println("Write vertexes:");
             s = sc.nextInt();
             k = sc.nextInt();
-            adMatrix[s - 1][i] = 1;
-            adMatrix[k - 1][i] = 1;
-            inMatrix[s - 1][k - 1] = 1;
-            inMatrix[k - 1][s - 1] = 1;
+            inMatrix[s - 1][i] = n;
+            inMatrix[k - 1][i] = n;
+            adMatrix[s - 1][k - 1] = n;
+           adMatrix[k - 1][s - 1] = n;
         }
-        System.out.println("Incidence matrix:");
-        for (int i = 0; i < vertex; i++) {
-            for (int j = 0; j < edges; j++) {
-                System.out.print(adMatrix[i][j] + " ");
-            }
-            System.out.print("\n");
-        }
-        System.out.println("Adjacency matrix:");
-        for (int i = 0; i < vertex; i++) {
-            for (int j = 0; j < vertex; j++) {
-                System.out.print(inMatrix[i][j] + " ");
+    }
+
+    private static void printMatrix(int[][] array) {
+        for (int[] ints : array) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
             }
             System.out.print("\n");
         }
     }
-
 }
