@@ -2,7 +2,7 @@ package com.nki.dzhurynskyi.homework.pr1;
 
 import java.util.Scanner;
 
-public class graf {
+public class graph {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Vertex:");
